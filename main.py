@@ -1,5 +1,4 @@
-from window import Window
-from line import Point, Line
+from graphics import Window, Point, Line
 
 def main():
     win = Window(800, 600)
