@@ -41,3 +41,21 @@ class Line:
         canvas.create_line(
             self.point1.x, self.point1.y, self.point2.x, self.point2.y, fill=fill_color, width=2
         )
+
+class Cell:
+    def __init__(self, x1, y1, x2, y2, window):
+        self._x1 = x1
+        self._x2 = x2
+        self._y1 = y1
+        self._y2 = y2
+        self._win = window
+        self.has_left_wall = True
+        self.has_right_wall = True
+        self.has_top_wall = True
+        self.has_bottom_wall = True
+
+    def draw(self):
+        top_left = Point(self._x1, self._y1)
+        bottom_right = Point(self._x2, self._y2)
+        horizontal_distance = abs(self._x2 - self._x1)
+        vertical_distacne = abs(self._y2 - self._y1)
