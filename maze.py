@@ -53,6 +53,23 @@ class Maze:
         self._draw_cell(0, 0)
         exit.has_bottom_wall = False
         self._draw_cell(self.num_cols - 1, self.num_rows - 1)
+
+    def _break_walls_r(self, i, j):
+        self._cells[i][j].visited = True
+        while True:
+            visited = []
+            left_cell = self._cells[i][j - 1]
+            right_cell = self._cells[i][j + 1]
+            top_cell = self._cells[i - 1][j]
+            bottom_cell = self._cells[i + 1][j]
+            if left_cell.visited == True:
+                visited.append(left_cell)
+            if right_cell.visited == True:
+                visited.append(right_cell)
+            if top_cell.visited == True:
+                visited.append(top_cell)
+            if bottom_cell.visited == True:
+                visited.append(bottom_cell)
     
     def _animate(self):
         if self.win is None:
