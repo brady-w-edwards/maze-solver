@@ -1,4 +1,5 @@
 import time
+import random
 from cell import Cell
 
 class Maze:
@@ -11,6 +12,7 @@ class Maze:
         cell_size_x,
         cell_size_y,
         win=None,
+        seed=None,
     ):
         self.x1 = x1
         self.y1 = y1
@@ -19,6 +21,7 @@ class Maze:
         self.cell_size_x = cell_size_x
         self.cell_size_y = cell_size_y
         self.win = win
+        self._seed = random.seed(seed)
         self._cells = []
 
         self._create_cells()
@@ -31,17 +34,25 @@ class Maze:
             self._cells.append(columns)
         for i in range(self.num_rows):
             for j in range(self.num_cols):
-                self._draw_cells(i, j)
+                self._draw_cell(i, j)
 
-    def _draw_cells(self, i, j):
+    def _draw_cell(self, i, j):
         if self.win is None:
             return
         x1 = self.x1 + i * self.cell_size_x
         y1 = self.y1 + j * self.cell_size_y
         x2 = x1 + self.cell_size_x
         y2 = y1 + self.cell_size_y
-        self._cells[i][j].draw(x1, y1, x2, y2)
+        self._cells[j][i].draw(x1, y1, x2, y2)
         self._animate()
+
+    def _break_entrance_and_exit(self):
+        entrance = self._cells[0][0]
+        exit = self._cells[self.num_cols - 1][self.num_rows - 1]
+        entrance.has_top_wall = False
+        self._draw_cell(0, 0)
+        exit.has_bottom_wall = False
+        self._draw_cell(self.num_cols - 1, self.num_rows - 1)
     
     def _animate(self):
         if self.win is None:
